@@ -92,4 +92,4 @@ class LandmarkRunner(object):
         _ = self._run(dummy_image)
 
         elapse = self.timer.toc()
-        rlog(f'LandmarkRunner warmup time: {elapse:.3f}s')
+        print(f'LandmarkRunner warmup time: {elapse:.3f}s')
