@@ -96,7 +96,7 @@ class LivePortraitMotionExtractor(object):
         wfp_template = None
         wfp_template = remove_suffix(args.driving) + suffix
         if os.path.exists(wfp_template):
-            log("motion generated ...")
+            print("motion generated ...")
             return
 
         if osp.exists(args.driving):
@@ -104,13 +104,13 @@ class LivePortraitMotionExtractor(object):
                 flag_is_driving_video = True
                 # load from video file, AND make motion template
                 output_fps = int(get_fps(args.driving))
-                log(f"Load driving video from: {args.driving}, FPS is {output_fps}")
+                print(f"Load driving video from: {args.driving}, FPS is {output_fps}")
                 driving_rgb_lst = load_video(args.driving)
             else:
                 raise Exception(f"{args.driving} is not a supported type!")
 
             ######## make motion template ########
-            log("Start making driving motion template...")
+            print("Start making driving motion template...")
             driving_n_frames = len(driving_rgb_lst)
             n_frames = driving_n_frames
 
@@ -118,7 +118,7 @@ class LivePortraitMotionExtractor(object):
             if inf_cfg.flag_crop_driving_video or (not is_square_video(args.driving)):
                 print("croping: ", inf_cfg.flag_crop_driving_video)
                 ret_d = self.cropper.crop_driving_video(driving_rgb_lst)
-                log(f'Driving video is cropped, {len(ret_d["frame_crop_lst"])} frames are processed.')
+                print(f'Driving video is cropped, {len(ret_d["frame_crop_lst"])} frames are processed.')
                 if len(ret_d["frame_crop_lst"]) is not n_frames and flag_is_driving_video:
                     n_frames = min(n_frames, len(ret_d["frame_crop_lst"]))
                 driving_rgb_crop_lst, driving_lmk_crop_lst = ret_d['frame_crop_lst'], ret_d['lmk_crop_lst']
@@ -135,7 +135,7 @@ class LivePortraitMotionExtractor(object):
 
             wfp_template = remove_suffix(args.driving) + suffix
             dump(wfp_template, driving_template_dct)
-            log(f"Dump motion template to {wfp_template}")
+            print(f"Dump motion template to {wfp_template}")
         else:
             raise Exception(f"{args.driving} does not exist!")
 
