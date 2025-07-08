@@ -76,4 +76,4 @@ class FaceAnalysisDIY(FaceAnalysis):
         self.get(img_bgr)
 
         elapse = self.timer.toc()
-        log(f'FaceAnalysisDIY warmup time: {elapse:.3f}s')
+        print(f'FaceAnalysisDIY warmup time: {elapse:.3f}s')
