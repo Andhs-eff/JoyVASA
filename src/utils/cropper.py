@@ -104,10 +104,10 @@ class Cropper(object):
             )
 
             if len(src_face) == 0:
-                log("No face detected in the source image.")
+                print("No face detected in the source image.")
                 return None
             elif len(src_face) > 1:
-                log(f"More than one face detected in the image, only pick one face by rule {crop_cfg.direction}.")
+                print(f"More than one face detected in the image, only pick one face by rule {crop_cfg.direction}.")
 
             # NOTE: temporarily only pick the first face, to support multiple face in the future
             src_face = src_face[0]
@@ -158,10 +158,10 @@ class Cropper(object):
             direction=direction,
         )
         if len(src_face) == 0:
-            log("No face detected in the source image.")
+            print("No face detected in the source image.")
             return None
         elif len(src_face) > 1:
-            log(f"More than one face detected in the image, only pick one face by rule {direction}.")
+            print(f"More than one face detected in the image, only pick one face by rule {direction}.")
         src_face = src_face[0]
         lmk = src_face.landmark_2d_106
         lmk = self.human_landmark_runner.run(img_rgb_, lmk)
@@ -182,10 +182,10 @@ class Cropper(object):
                     max_face_num=crop_cfg.max_face_num,
                 )
                 if len(src_face) == 0:
-                    log(f"No face detected in the frame #{idx}")
+                    print(f"No face detected in the frame #{idx}")
                     continue
                 elif len(src_face) > 1:
-                    log(f"More than one face detected in the source frame_{idx}, only pick one face by rule {direction}.")
+                    print(f"More than one face detected in the source frame_{idx}, only pick one face by rule {direction}.")
                 src_face = src_face[0]
                 lmk = src_face.landmark_2d_106
                 lmk = self.human_landmark_runner.run(frame_rgb, lmk)
@@ -236,10 +236,10 @@ class Cropper(object):
                     direction=direction,
                 )
                 if len(src_face) == 0:
-                    log(f"No face detected in the frame #{idx}")
+                    print(f"No face detected in the frame #{idx}")
                     continue
                 elif len(src_face) > 1:
-                    log(f"More than one face detected in the driving frame_{idx}, only pick one face by rule {direction}.")
+                    print(f"More than one face detected in the driving frame_{idx}, only pick one face by rule {direction}.")
                 src_face = src_face[0]
                 lmk = src_face.landmark_2d_106
                 lmk = self.human_landmark_runner.run(frame_rgb, lmk)
@@ -297,10 +297,10 @@ class Cropper(object):
                     direction=direction,
                 )
                 if len(src_face) == 0:
-                    log(f"No face detected in the frame #{idx}")
+                    print(f"No face detected in the frame #{idx}")
                     raise Exception(f"No face detected in the frame #{idx}")
                 elif len(src_face) > 1:
-                    log(f"More than one face detected in the driving frame_{idx}, only pick one face by rule {direction}.")
+                    print(f"More than one face detected in the driving frame_{idx}, only pick one face by rule {direction}.")
                 src_face = src_face[0]
                 lmk = src_face.landmark_2d_106
                 lmk = self.human_landmark_runner.run(frame_rgb_crop, lmk)
