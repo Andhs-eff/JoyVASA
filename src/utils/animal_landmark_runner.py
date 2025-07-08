@@ -135,4 +135,4 @@ class XPoseRunner(object):
         self.run(img_rgb, 'face', 'face', box_threshold=0.0, IoU_threshold=0.0)
 
         elapse = self.timer.toc()
-        log(f'XPoseRunner warmup time: {elapse:.3f}s')
+        print(f'XPoseRunner warmup time: {elapse:.3f}s')
