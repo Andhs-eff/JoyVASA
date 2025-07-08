@@ -142,7 +142,7 @@ def get_fps(filepath, default_fps=25):
         if fps in (0, None):
             fps = default_fps
     except Exception as e:
-        log(e)
+        print(e)
         fps = default_fps
 
     return fps
@@ -171,13 +171,13 @@ def has_audio_stream(video_path: str) -> bool:
         # result = subprocess.run(cmd, capture_output=True, text=True)
         result = exec_cmd(' '.join(cmd))
         if result.returncode != 0:
-            log(f"Error occurred while probing video: {result.stderr}")
+            print(f"Error occurred while probing video: {result.stderr}")
             return False
 
         # Check if there is any output from ffprobe command
         return bool(result.stdout.strip())
     except Exception as e:
-        log(
+        print(
             f"Error occurred while probing video: {video_path}, "
             "you may need to install ffprobe! (https://ffmpeg.org/download.html) "
             "Now set audio to false!",
@@ -215,11 +215,11 @@ def add_audio_to_video(silent_video_path: str, audio_video_path: str, output_vid
         ]
     try:
         subprocess.run(cmd)
-        log(f"Video with audio generated successfully: {output_video_path}")
+        print(f"Video with audio generated successfully: {output_video_path}")
         if remove_temp:
             os.remove(silent_video_path)
     except subprocess.CalledProcessError as e:
-        log(f"Error occurred: {e}")
+        print(f"Error occurred: {e}")
 
 
 def bb_intersection_over_union(boxA, boxB):
