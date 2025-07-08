@@ -52,20 +52,20 @@ class LivePortraitWrapper(object):
         model_config = yaml.load(open(inference_cfg.models_config, 'r'), Loader=yaml.SafeLoader)
         # init F
         self.appearance_feature_extractor = load_model(inference_cfg.checkpoint_F, model_config, self.device, 'appearance_feature_extractor')
-        log(f'Load appearance_feature_extractor from {osp.realpath(inference_cfg.checkpoint_F)} done.')
+        print(f'Load appearance_feature_extractor from {osp.realpath(inference_cfg.checkpoint_F)} done.')
         # init M
         self.motion_extractor = load_model(inference_cfg.checkpoint_M, model_config, self.device, 'motion_extractor')
-        log(f'Load motion_extractor from {osp.realpath(inference_cfg.checkpoint_M)} done.')
+        print(f'Load motion_extractor from {osp.realpath(inference_cfg.checkpoint_M)} done.')
         # init W
         self.warping_module = load_model(inference_cfg.checkpoint_W, model_config, self.device, 'warping_module')
-        log(f'Load warping_module from {osp.realpath(inference_cfg.checkpoint_W)} done.')
+        print(f'Load warping_module from {osp.realpath(inference_cfg.checkpoint_W)} done.')
         # init G
         self.spade_generator = load_model(inference_cfg.checkpoint_G, model_config, self.device, 'spade_generator')
-        log(f'Load spade_generator from {osp.realpath(inference_cfg.checkpoint_G)} done.')
+        print(f'Load spade_generator from {osp.realpath(inference_cfg.checkpoint_G)} done.')
         # init S and R
         if inference_cfg.checkpoint_S is not None and osp.exists(inference_cfg.checkpoint_S):
             self.stitching_retargeting_module = load_model(inference_cfg.checkpoint_S, model_config, self.device, 'stitching_retargeting_module')
-            log(f'Load stitching_retargeting_module from {osp.realpath(inference_cfg.checkpoint_S)} done.')
+            print(f'Load stitching_retargeting_module from {osp.realpath(inference_cfg.checkpoint_S)} done.')
         else:
             self.stitching_retargeting_module = None
         # Optimize for inference
@@ -79,7 +79,7 @@ class LivePortraitWrapper(object):
 
         # Motion Genertor
         self.motion_generator, self.motion_generator_args = load_model(inference_cfg.checkpoint_MotionGenerator, model_config, self.device, 'motion_generator')
-        log(f'Load motion_generator from {osp.realpath(inference_cfg.checkpoint_MotionGenerator)} done.')
+        print(f'Load motion_generator from {osp.realpath(inference_cfg.checkpoint_MotionGenerator)} done.')
         self.n_motions = self.motion_generator_args.n_motions
         self.n_prev_motions = self.motion_generator_args.n_prev_motions
         self.fps = self.motion_generator_args.fps
@@ -358,13 +358,13 @@ class LivePortraitWrapper(object):
     
     def gen_motion_sequence(self, args):
        # preprocess audio
-        log(f"start loading audio from {args.audio}")
+        print(f"start loading audio from {args.audio}")
         audio, _ = librosa.load(args.audio, sr=16000, mono=True)
-        log(f"audio loaded! {audio.shape}")
+        print(f"audio loaded! {audio.shape}")
         if isinstance(audio, np.ndarray):
             audio = torch.from_numpy(audio).to(self.device)
         assert audio.ndim == 1, 'Audio must be 1D tensor.'
-        log(f"loading audio from: {args.audio}")
+        print(f"loading audio from: {args.audio}")
         audio = F.pad(audio, (1280, 640), "constant", 0)
 
 
@@ -471,20 +471,20 @@ class LivePortraitWrapperAnimal(LivePortraitWrapper):
         model_config = yaml.load(open(inference_cfg.models_config, 'r'), Loader=yaml.SafeLoader)
         # init F
         self.appearance_feature_extractor = load_model(inference_cfg.checkpoint_F_animal, model_config, self.device, 'appearance_feature_extractor')
-        log(f'Load appearance_feature_extractor from {osp.realpath(inference_cfg.checkpoint_F_animal)} done.')
+        print(f'Load appearance_feature_extractor from {osp.realpath(inference_cfg.checkpoint_F_animal)} done.')
         # init M
         self.motion_extractor = load_model(inference_cfg.checkpoint_M_animal, model_config, self.device, 'motion_extractor')
-        log(f'Load motion_extractor from {osp.realpath(inference_cfg.checkpoint_M_animal)} done.')
+        print(f'Load motion_extractor from {osp.realpath(inference_cfg.checkpoint_M_animal)} done.')
         # init W
         self.warping_module = load_model(inference_cfg.checkpoint_W_animal, model_config, self.device, 'warping_module')
-        log(f'Load warping_module from {osp.realpath(inference_cfg.checkpoint_W_animal)} done.')
+        print(f'Load warping_module from {osp.realpath(inference_cfg.checkpoint_W_animal)} done.')
         # init G
         self.spade_generator = load_model(inference_cfg.checkpoint_G_animal, model_config, self.device, 'spade_generator')
-        log(f'Load spade_generator from {osp.realpath(inference_cfg.checkpoint_G_animal)} done.')
+        print(f'Load spade_generator from {osp.realpath(inference_cfg.checkpoint_G_animal)} done.')
         # init S and R
         if inference_cfg.checkpoint_S_animal is not None and osp.exists(inference_cfg.checkpoint_S_animal):
             self.stitching_retargeting_module = load_model(inference_cfg.checkpoint_S_animal, model_config, self.device, 'stitching_retargeting_module')
-            log(f'Load stitching_retargeting_module from {osp.realpath(inference_cfg.checkpoint_S_animal)} done.')
+            print(f'Load stitching_retargeting_module from {osp.realpath(inference_cfg.checkpoint_S_animal)} done.')
         else:
             self.stitching_retargeting_module = None
 
@@ -498,7 +498,7 @@ class LivePortraitWrapperAnimal(LivePortraitWrapper):
 
         # Motion Genertor
         self.motion_generator, self.motion_generator_args = load_model(inference_cfg.checkpoint_MotionGenerator, model_config, self.device, 'motion_generator')
-        log(f'Load motion_generator from {osp.realpath(inference_cfg.checkpoint_MotionGenerator)} done.')
+        print(f'Load motion_generator from {osp.realpath(inference_cfg.checkpoint_MotionGenerator)} done.')
         self.n_motions = self.motion_generator_args.n_motions
         self.n_prev_motions = self.motion_generator_args.n_prev_motions
         self.fps = self.motion_generator_args.fps
