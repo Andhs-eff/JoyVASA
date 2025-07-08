@@ -49,7 +49,7 @@ class LivePortraitPipelineAnimal(object):
         if is_image(args.reference):
             img_rgb = load_image_rgb(args.reference)
             img_rgb = resize_to_limit(img_rgb, inf_cfg.source_max_dim, inf_cfg.source_division)
-            log(f"Load reference image from {args.reference}")
+            print(f"Load reference image from {args.reference}")
         else:
             raise Exception(f"Unknown reference image format: {args.reference}")
 
@@ -61,7 +61,7 @@ class LivePortraitPipelineAnimal(object):
         I_p_pstbk_lst = None
         if inf_cfg.flag_pasteback and inf_cfg.flag_do_crop and inf_cfg.flag_stitching:
             I_p_pstbk_lst = []
-            log("Prepared pasteback mask done.")
+            print("Prepared pasteback mask done.")
 
         ######## process source info ########
         if inf_cfg.flag_do_crop:
